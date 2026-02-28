@@ -10,6 +10,25 @@ What are your thoughts on the pros and cons of each approach? Which would you ch
 
 **Answer:**
 ```txt
+OpenAPI Spec Approach:
+Pros:
+- Provides a clear, standardized contract for the API, which can be easily shared and understood by different teams and stakeholders.
+- Enables automatic code generation, which can speed up development and reduce boilerplate
+cons:
+- Human mistake
+- Need to handle very carefully while updating
+
+Direct Approach :
+Pros:
+- Well designed api
+- Less human mistakes
+Cons:
+- Time consuming
+- Tightly coupled with code
+
+Conclusion :
+ Open Api is more usefull for get call, validations
+ Direct approach is usefull for complecated end point which includes request body
 
 ```
 
