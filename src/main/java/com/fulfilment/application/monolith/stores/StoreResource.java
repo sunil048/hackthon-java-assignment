@@ -54,6 +54,17 @@ public class StoreResource {
   @POST
   @Transactional
   public Response create(Store store) {
+
+    if (store == null) {
+      throw new WebApplicationException("Store cannot be null.", 400);
+    }
+    if (store.name == null || store.name.trim().isEmpty()) {
+      throw new WebApplicationException("Store name cannot be null or empty.", 422);
+    }
+    if (store.quantityProductsInStock < 0) {
+      throw new WebApplicationException("Quantity of products in stock cannot be negative.", 422);
+    }
+
     if (store.id != null) {
       throw new WebApplicationException("Id was invalidly set on request.", 422);
     }

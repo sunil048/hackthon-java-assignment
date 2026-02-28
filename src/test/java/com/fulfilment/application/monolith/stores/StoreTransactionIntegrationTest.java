@@ -2,7 +2,9 @@ package com.fulfilment.application.monolith.stores;
 
 import static io.restassured.RestAssured.given;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.never;
 
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
@@ -25,7 +27,7 @@ public class StoreTransactionIntegrationTest {
   public void testLegacySystemNotNotifiedOnFailedStoreCreation() throws InterruptedException {
     Mockito.reset(legacyGateway);
 
-    String uniqueName = "IntegrationTest_" + System.currentTimeMillis();
+    final String uniqueName = "IntegrationTest_" + System.currentTimeMillis();
 
     // First create should succeed
     given()
@@ -57,5 +59,15 @@ public class StoreTransactionIntegrationTest {
 
     // Legacy system should NOT be notified for a failed transaction
     verify(legacyGateway, never()).createStoreOnLegacySystem(any(Store.class));
+  }
+
+  @Test
+  public void testCreateStoreWithInvalidData() {
+    given()
+        .contentType("application/json")
+        .body("{\"quantityProductsInStock\": 5}") // Missing "name"
+        .when().post("/store")
+        .then()
+        .statusCode(422);
   }
 }
