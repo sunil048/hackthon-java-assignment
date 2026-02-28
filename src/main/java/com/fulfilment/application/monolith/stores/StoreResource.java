@@ -57,11 +57,14 @@ public class StoreResource {
     if (store.id != null) {
       throw new WebApplicationException("Id was invalidly set on request.", 422);
     }
-
-    store.persist();
-    storeCreatedEvent.fireAsync(new StoreCreatedEvent(store));
-
-    return Response.ok(store).status(201).build();
+    boolean exists = Store.count("name", store.name) > 0;
+    if (!exists) {
+      store.persist();
+      storeCreatedEvent.fireAsync(new StoreCreatedEvent(store));
+      return Response.ok(store).status(201).build();
+    } else {
+      throw new WebApplicationException("Store with name of " + store.name + " already exists.", 500);
+    }
   }
 
   @PUT
