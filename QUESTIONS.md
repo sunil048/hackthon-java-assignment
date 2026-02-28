@@ -41,6 +41,16 @@ Given the need to balance thorough testing with time and resource constraints, h
 Which types of tests (unit, integration, parameterized, etc.) would you focus on, and how would you ensure test coverage remains effective over time?
 
 **Answer:**
-```txt
+```
+With given time and resource constraints, I would prioritize tests as follows:
+1. Prioritization of Tests:
+    unit test : make sure to cover all scenarios
+    sanity test : make sure api is up and running
+    integration test : make sure all components are working together as expected
+    
+    To ensure effective coverage over time, I would:
+    - Implement a test coverage tool to monitor eg sonar
+    - run pr (pull request) build to pass code coverage,BDD scenarios
+     If par pass approve pr to merge with master
 
 ```
